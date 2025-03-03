@@ -1,0 +1,28 @@
+.textAnimated{
+    border-right: 2px solid #000;
+    width: 15ch;
+    animation: blinkmarker 0.8s infinite, writing 8s infinite steps(14);
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+@keyframes blinkmarker {
+    50% {
+        border-color: transparent;
+    }
+}
+
+@keyframes writing {
+    0% {
+        width: 0;
+    }
+    40% {
+        width: 15ch;
+    }
+    60%{
+        width: 15ch;
+    }
+    100% {
+        width: 0;
+    }
+}

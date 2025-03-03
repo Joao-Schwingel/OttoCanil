@@ -1,101 +1,208 @@
-import Image from "next/image";
+import Link from 'next/link';
+import { Card, CardContent } from '@/components/ui/card';
+import Image from 'next/image';
+import './page.css';
+
+const breeds = [
+  { name: 'Shih Tzu' },
+  { name: 'Golden' },
+  { name: 'Bulldog Frances' },
+  { name: 'Samoieda' },
+  { name: 'Chiuaua' },
+  { name: 'Husky Siberiano' },
+  { name: 'Spitz Alemao' }
+];
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen bg-[var(--background)]">
+      <section className="container mx-auto px-4 py-8">
+        {/* Hero Section */}
+        <div className="border-4 border-[#4A290D] bg-[#4A290D] rounded-sm p-2 mb-12 flex justify-self-center">
+          <div className="grid grid-cols-[3fr_2fr] w-full gap-4 lg:h-[300px] sm:h-[250px]">
+            <div className="bg-[#f5f3f0] border-2 border-gray-200 rounded-sm flex items-center justify-center p-4">
+              <p className="text-center text-sm md:text-lg font-semibold textAnimated">
+                Criação com amor
+              </p>
+            </div>
+            <div className="border-2 border-gray-200 rounded-sm bg-[#f5f3f0] flex items-center">
+              <Image
+                src={'/images/logo_final.png'}
+                alt={'logo'}
+                width={275}
+                height={275}
+                className="aspect-square rounded-lg mb-2 object-contain w-[100%] bg-[#f5f3f0] justify-self-center self-center "
+              />
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        <div className="absolute inline-block mb-6 left-0 w-[20%] text-center ">
+          <h2 className="bg-[#4A290D] text-white px-4 py-1 text-lg md:text-xl realtive z-10 rounded-r-full tracking-[1rem] w-min">
+            Raças
+          </h2>
+        </div>
+        {/* Breeds Section */}
+        <div className="mb-12 pt-12 p-12">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {breeds.map((breed) => (
+              <Link
+                key={breed.name}
+                href={`/breeds/${breed.name
+                  .toLowerCase()
+                  .replace(/\s+/g, '-')}`}
+                className="group"
+              >
+                <Card className="border-none hover:shadow-lg transition-shadow">
+                  <CardContent className="p-2 md:p-3">
+                    <Image
+                      src={`/images/breeds/${breed.name
+                        .toLowerCase()
+                        .replace(/\s+/g, '')}.jpg`}
+                      alt={'schitzu'}
+                      width={300}
+                      height={300}
+                      className="aspect-square border-2 border-gray-200 rounded-lg mb-2 object-cover"
+                    />
+                    <h3 className="text-center text-xs md:text-sm font-medium">
+                      {breed.name}
+                    </h3>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Testimonials Section */}
+        <section className="mt-16">
+          <div className="relative h-[200px] md:h-[300px] w-full mb-8">
+            <Image
+              src="/images/fullImage.jpg"
+              alt="Relaxed dog"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              style={{ objectFit: 'cover', objectPosition: '50% 70%' }}
+              className="w-full h-full rounded-lg"
+            />
+          </div>
+
+          <div className="bg-[#4A290D] rounded-lg p-4 md:p-8 text-white mb-16">
+            <h2 className="text-xl md:text-2xl text-center mb-6 md:mb-8 font-serif border-b-2 border-white w-[50%] place-self-center">
+              Depoimentos de clientes
+            </h2>
+            <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+              <div className="text-center">
+                <p className="mb-4 text-sm md:text-base">
+                  Hoje levei a BB no veterinário, e ele me falou pra eu dar
+                  parabéns a vcs pq a BB está em excelente saúde física, mental
+                  .... Elogiou muito…
+                </p>
+                {/* <span className="text-xs md:text-sm opacity-75">
+                  - Ricardo Santos
+                </span> */}
+              </div>
+              <div className="text-center">
+                <p className="mb-4 text-sm md:text-base">
+                  Lugar incrível, onde os animais são muito bem cuidados e
+                  recebem muito amor e carinho, recomendo 100%!
+                </p>
+                {/* <span className="text-xs md:text-sm opacity-75">
+                  - Fernanda Santos
+                </span> */}
+              </div>
+              <div className="text-center">
+                <p className="mb-4 text-sm md:text-base">
+                  Ontem tivemos que levar ele numa veterinária, ela ficou
+                  impressionada com a “pureza”….ela disse que fazia tempo que
+                  não via um Shih tzu tão perfeito….
+                </p>
+                {/* <span className="text-xs md:text-sm opacity-75">
+                  - Sofia Santos
+                </span> */}
+              </div>
+            </div>
+          </div>
+
+          {/* Our History Section */}
+          <div className="mb-16">
+            <div className="relative text-center mb-8 md:mb-12">
+              <h2 className="text-2xl md:text-3xl font-serif inline-block px-4 bg-[#f5f3f0] relative z-10">
+                Nossa Historia
+              </h2>
+              <div className="absolute left-0 right-0 top-1/2 h-1 bg-gray-300 -z-0" />
+            </div>
+
+            <div className="flex flex-col gap-8">
+              <div className="space-y-4 md:space-y-6">
+                <p className="text-sm md:text-base text-gray-600">
+                  O Otto Canil foi inaugurado em 2019, fruto da paixão de Marcos
+                  pelos animais e do seu objetivo de preservar as raças puras.
+                  Ele sempre sonhou em criar um espaço dedicado a esse
+                  propósito, onde pudesse conciliar seu amor pelos animais com a
+                  oportunidade de oferecer um ambiente que garantisse o
+                  bem-estar deles.
+                </p>
+                <p className="text-sm md:text-base text-gray-600">
+                  Infelizmente, em 2021, Marcos faleceu, deixando um legado de
+                  carinho pelos cães e um sonho que precisava ser continuado.
+                  Seus filhos, também apaixonados pelos animais e com o desejo
+                  de honrar a memória do pai, assumiram o canil.
+                </p>
+                <p className="text-sm md:text-base text-gray-600">
+                  Determinados a preservar o compromisso com o cuidado e a
+                  preservação das raças puras, eles seguem com a missão de
+                  tornar o Otto Canil como referência para todos os amantes de
+                  cães, mantendo vivo o legado de amor e dedicação
+                  criado pelo pai
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-4 sm:grid-rows-2 md:grid-rows-1">
+                <div className="aspect-square border-2 border-gray-200 rounded-lg relative">
+                  <Image
+                    src="/images/nossa_historia3.jpg"
+                    alt="our history" 
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    style={{ objectFit: 'cover', objectPosition: 'center' }}
+                    className="w-full h-full rounded-lg"
+                  />
+                </div>
+                <div className="aspect-square border-2 border-gray-200 rounded-lg relative">
+                  <Image
+                    src="/images/nossa_historia2.jpg"
+                    alt="our history"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    style={{ objectFit: 'cover', objectPosition: 'center' }}
+                    className="w-full h-full rounded-lg"
+                  />
+                </div>
+                <div className="aspect-square border-2 border-gray-200 rounded-lg relative">
+                  <Image
+                    src="/images/nossa_historia.jpg"
+                    alt="our history"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    style={{ objectFit: 'cover', objectPosition: 'center' }}
+                    className="w-full h-full rounded-lg"
+                  />
+                </div>
+                <div className="aspect-square border-2 border-gray-200 rounded-lg relative">
+                  <Image
+                    src="/images/nossa_historia4.jpg"
+                    alt="our history"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    style={{ objectFit: 'cover', objectPosition: 'center' }}
+                    className="w-full h-full rounded-lg"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
     </div>
   );
 }
