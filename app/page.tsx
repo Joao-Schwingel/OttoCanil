@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import Image from 'next/image';
@@ -94,9 +95,9 @@ export default function Home() {
             <div className="grid md:grid-cols-3 gap-6 md:gap-8">
               <div className="text-center">
                 <p className="mb-4 text-sm md:text-base">
-                  Hoje levei a BB no veterinário, e ele me falou pra eu dar
+                "Hoje levei a BB no veterinário, e ele me falou pra eu dar
                   parabéns a vcs pq a BB está em excelente saúde física, mental
-                  .... Elogiou muito…
+                  .... Elogiou muito…"
                 </p>
                 {/* <span className="text-xs md:text-sm opacity-75">
                   - Ricardo Santos
@@ -104,8 +105,8 @@ export default function Home() {
               </div>
               <div className="text-center">
                 <p className="mb-4 text-sm md:text-base">
-                  Lugar incrível, onde os animais são muito bem cuidados e
-                  recebem muito amor e carinho, recomendo 100%!
+                "Lugar incrível, onde os animais são muito bem cuidados e
+                  recebem muito amor e carinho, recomendo 100%!"
                 </p>
                 {/* <span className="text-xs md:text-sm opacity-75">
                   - Fernanda Santos
@@ -113,9 +114,9 @@ export default function Home() {
               </div>
               <div className="text-center">
                 <p className="mb-4 text-sm md:text-base">
-                  Ontem tivemos que levar ele numa veterinária, ela ficou
+                "Ontem tivemos que levar ele numa veterinária, ela ficou
                   impressionada com a “pureza”….ela disse que fazia tempo que
-                  não via um Shih tzu tão perfeito….
+                  não via um Shih tzu tão perfeito…."
                 </p>
                 {/* <span className="text-xs md:text-sm opacity-75">
                   - Sofia Santos

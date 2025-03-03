@@ -344,7 +344,7 @@ export default function BreedPage({ params }: { params: { breed: string } }) {
 
           {/* Action Button */}
           <a 
-            href={`https://wa.me/51999965953?text=Olá,%20bom%20dia!Tenho%20interesse%20em%20saber%20mais%20sobre%20os%20filhotes%20da%20raça%20${breed.name}`}
+            href={`https://wa.me/5551999965953?text=Olá,%20bom%20dia!Tenho%20interesse%20em%20saber%20mais%20sobre%20os%20filhotes%20da%20raça%20${breed.name}`}
             className="w-full bg-[#4A290D] text-white py-2 px-4 rounded-md hover:bg-opacity-90 transition-colors text-sm md:text-base text-center block"
             target="_blank" 
             rel="noopener noreferrer"
