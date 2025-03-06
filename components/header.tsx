@@ -30,7 +30,7 @@ export function Header() {
                   Shih Tzu
                 </Link>
                 <Link href="/breeds/golden" onClick={() => setIsOpen(false)} className="text-lg">
-                  Golden
+                  Golden Retriver
                 </Link>
                 <Link href="/breeds/bulldog-frances" onClick={() => setIsOpen(false)} className="text-lg">
                   Bulldog Francês
@@ -38,8 +38,8 @@ export function Header() {
                 <Link href="/breeds/samoieda" onClick={() => setIsOpen(false)} className="text-lg">
                   Samoieda
                 </Link>
-                <Link href="/breeds/chiuaua" onClick={() => setIsOpen(false)} className="text-lg">
-                  Chiuaua
+                <Link href="/breeds/Chihuahua" onClick={() => setIsOpen(false)} className="text-lg">
+                Chihuahua
                 </Link>
                 <Link href="/breeds/husky-siberiano" onClick={() => setIsOpen(false)} className="text-lg">
                   Husky Siberiano

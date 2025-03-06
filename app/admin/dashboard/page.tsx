@@ -5,7 +5,8 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { CldUploadWidget } from 'next-cloudinary';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../components/ui/select';
-import { Value } from '@radix-ui/react-select';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 interface Puppy {
   tags: string[]
@@ -15,10 +16,10 @@ interface Puppy {
 
 const breedOptions = [
   'shih-tzu',
-  'golden',
+  'Golden Retriver',
   'bulldog-frances',
   'samoieda',
-  'chiuaua',
+  'Chihuahua',
   'husky-siberiano',
   'spitz-alemao'
 ];
@@ -31,6 +32,7 @@ export default function AdminDashboard() {
   const [puppies, setPuppies] = useState<Puppy[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [sexo, setSexo] = useState<string>('M');
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -116,7 +118,17 @@ export default function AdminDashboard() {
               ))}
             </SelectContent>
           </Select>
-          {selectedBreed && (<CldUploadWidget uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET} options={{ tags: [selectedBreed]}} onUpload={fetchPuppies}>
+          <RadioGroup defaultValue="M">
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="F" id="r1" aria-label="Fêmea" onClick={() => setSexo('F')}/>
+              <Label htmlFor="r1">FEMEA</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="M" id="r2" aria-label="Macho" onClick={() => setSexo('M')}/>
+              <Label htmlFor="r2">MACHO</Label>
+            </div>
+          </RadioGroup>
+          {selectedBreed && (<CldUploadWidget uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET} options={{ tags: [selectedBreed, sexo]}} onUpload={fetchPuppies}>
             {({ open }) => (
               <button onClick={() => {open();}} className="bg-green-500 text-white px-4 py-2 rounded">
                 Upload Image
@@ -135,7 +147,10 @@ export default function AdminDashboard() {
               className="w-full h-48 object-cover mb-2"
             />
             <p>
-              <strong>Breed:</strong> {puppy.tags}
+              <strong>Breed:</strong> {puppy.tags[0]}
+            </p>
+            <p>
+              <strong>Sexo:</strong> {puppy.tags[1]}
             </p>
             {/* <p>
               <strong>Status:</strong> {puppy.tags[1] == 'active' ? 'Available' : 'Unavailable'}

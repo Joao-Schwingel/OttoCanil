@@ -6,10 +6,10 @@ import './page.css';
 
 const breeds = [
   { name: 'Shih Tzu' },
-  { name: 'Golden' },
+  { name: 'Golden Retriver' },
   { name: 'Bulldog Frances' },
   { name: 'Samoieda' },
-  { name: 'Chiuaua' },
+  { name: 'Chihuahua' },
   { name: 'Husky Siberiano' },
   { name: 'Spitz Alemao' }
 ];
@@ -20,9 +20,9 @@ export default function Home() {
       <section className="container mx-auto px-4 py-8">
         {/* Hero Section */}
         <div className="border-4 border-[#4A290D] bg-[#4A290D] rounded-sm p-2 mb-12 flex justify-self-center">
-          <div className="grid grid-cols-[3fr_2fr] w-full gap-4 lg:h-[300px] sm:h-[250px]">
+          <div className="grid grid-cols-[3fr_2fr] w-full gap-4 lg:h-[300px] sm:h-[250px] md:h-[300px]">
             <div className="bg-[#f5f3f0] border-2 border-gray-200 rounded-sm flex items-center justify-center p-4">
-              <p className="text-center text-sm md:text-lg font-semibold textAnimated">
+              <p className="text-center font-dancing font-semibold textAnimated lg:text-[26px]">
                 Criação com amor
               </p>
             </div>
@@ -32,7 +32,7 @@ export default function Home() {
                 alt={'logo'}
                 width={275}
                 height={275}
-                className="aspect-square rounded-lg mb-2 object-contain w-[100%] bg-[#f5f3f0] justify-self-center self-center "
+                className="aspect-square rounded-lg mb-2 object-contain bg-[#f5f3f0] justify-self-center self-center "
               />
             </div>
           </div>
@@ -94,7 +94,7 @@ export default function Home() {
             </h2>
             <div className="grid md:grid-cols-3 gap-6 md:gap-8">
               <div className="text-center">
-                <p className="mb-4 text-sm md:text-base">
+                <p className="mb-4 text-sm md:text-base italic">
                 "Hoje levei a BB no veterinário, e ele me falou pra eu dar
                   parabéns a vcs pq a BB está em excelente saúde física, mental
                   .... Elogiou muito…"
@@ -104,7 +104,7 @@ export default function Home() {
                 </span> */}
               </div>
               <div className="text-center">
-                <p className="mb-4 text-sm md:text-base">
+                <p className="mb-4 text-sm md:text-base italic">
                 "Lugar incrível, onde os animais são muito bem cuidados e
                   recebem muito amor e carinho, recomendo 100%!"
                 </p>
@@ -113,7 +113,7 @@ export default function Home() {
                 </span> */}
               </div>
               <div className="text-center">
-                <p className="mb-4 text-sm md:text-base">
+                <p className="mb-4 text-sm md:text-base italic">
                 "Ontem tivemos que levar ele numa veterinária, ela ficou
                   impressionada com a “pureza”….ela disse que fazia tempo que
                   não via um Shih tzu tão perfeito…."

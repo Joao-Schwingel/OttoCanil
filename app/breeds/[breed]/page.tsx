@@ -56,7 +56,7 @@ const breedData: Record<string, BreedData> = {
       { label: 'Frequência de banho', value: '7 a 15 dias' }
     ]
   },
-  'golden': {
+  'golden-retriver': {
     name: 'Golden Retriever',
     description: `Com  sua  aparência  amigável  e  personalidade  brincalhona,  eles  conquistam 
     corações onde quer que vão. Fisicamente, o Golden Retriever é um cão de porte 
@@ -172,8 +172,8 @@ const breedData: Record<string, BreedData> = {
       { label: 'Peso', value: '1,5kg-3,5kg' }
     ]
   },
-  'chiuaua': {
-    name: 'Chiuaua',
+  'chihuahua': {
+    name: 'Chihuahua',
     description: `O  Chihuahua  é  uma  das  menores  raças  de  cães  do  mundo,  mas  o  tamanho 
     reduzido é compensado por uma personalidade vibrante e destemida. Esses cães 
     possuem uma altura que varia entre 15 a 23 cm e peso de até 3 kg. Sua aparência 
@@ -188,7 +188,7 @@ const breedData: Record<string, BreedData> = {
     e felizes. Com sua combinação de charme, inteligência e apego, o Chihuahua é 
     uma ótima escolha para quem procura um companheiro de pequeno porte, mas com 
     um coração enorme e uma personalidade inesquecível.  `,
-    image: '/images/chiuaua.jpg',
+    image: '/images/Chihuahua.jpg',
     characteristics: [
       { label: 'Carinho', rating: 5 },
       { label: 'Convívio com outras cães', rating: 3 },
@@ -301,10 +301,10 @@ export default function BreedPage({ params }: { params: { breed: string } }) {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="grid md:grid-cols-2 gap-8 items-start">
+      <div className="grid lg:grid-cols-2 gap-8 items-start">
         {/* Left Column - Image */}
         <div className="space-y-6">
-          <div className="aspect-square border-2 border-gray-200 rounded-lg">
+          <div className="aspect-square rounded-lg">
             <img src={`${breed.image}`} alt={breed.name} className="w-full h-full object-cover rounded-lg" />
           </div>
           <PuppyCarousel breed={params.breed} />
@@ -316,7 +316,7 @@ export default function BreedPage({ params }: { params: { breed: string } }) {
 
           <div className="prose max-w-none">
             {breed.description.split('\n\n').map((paragraph, index) => (
-              <p key={index} className="text-sm md:text-base text-gray-600">
+              <p key={index} className="text-sm md:text-base text-gray-600 text-justify mb-3">
                 {paragraph}
               </p>
             ))}

@@ -9,6 +9,10 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+      fontFamily: {
+        dancing: ['Dancing Script', 'cursive'],
+        montserrat: ['Montserrat', 'sans-serif']
+      },
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

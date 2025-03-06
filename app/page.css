@@ -1,7 +1,7 @@
 .textAnimated{
     border-right: 2px solid #000;
-    width: 15ch;
-    animation: blinkmarker 0.8s infinite, writing 8s infinite steps(14);
+    width: 11ch;
+    animation: blinkmarker 0.8s infinite, writing 8s infinite steps(12);
     overflow: hidden;
     white-space: nowrap;
 }
@@ -17,10 +17,10 @@
         width: 0;
     }
     40% {
-        width: 15ch;
+        width: 11ch;
     }
     60%{
-        width: 15ch;
+        width: 11ch;
     }
     100% {
         width: 0;

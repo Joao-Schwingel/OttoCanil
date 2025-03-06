@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Dog } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Puppy {
@@ -19,6 +19,21 @@ export function PuppyCarousel({ breed }: PuppyCarouselProps) {
   const [puppies, setPuppies] = useState<Puppy[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex === puppies.length - 1 ? 0 : prevIndex + 1));
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, puppies.length]);
+
+  // Pause auto-play on hover
+  const handleMouseEnter = () => setIsAutoPlaying(false);
+  const handleMouseLeave = () => setIsAutoPlaying(true);
 
   useEffect(() => {
     const fetchPuppies = async () => {
@@ -85,7 +100,8 @@ export function PuppyCarousel({ breed }: PuppyCarouselProps) {
   };
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative overflow-hidden"      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}>
       <div className="flex items-center justify-center">
         <div className="relative w-full">
           <div className='flex items-center w-full justify-center'>
@@ -126,6 +142,18 @@ export function PuppyCarousel({ breed }: PuppyCarouselProps) {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     priority
                   />
+                  <div
+                    className={`flex absolute left-2 top-2 items-center px-2 py-1 rounded-full bg-black/40 backdrop-blur-sm ${
+                      puppies[currentIndex].tags[1] === 'M'
+                        ? 'text-blue-300 border border-blue-400/30'
+                        : 'text-pink-300 border border-pink-400/30'
+                    }`}
+                  >
+                    <Dog className="w-4 h-4" />
+                    <span className="ml-1 text-xs font-medium text-white">
+                      {puppies[currentIndex].tags[1] === 'M' ? 'Macho' : 'Fêmea'}
+                    </span>
+                  </div>
                 </div>
               </motion.div>
             </AnimatePresence>
