@@ -22,8 +22,8 @@ export default function Home() {
         <div className="border-4 border-[#4A290D] bg-[#4A290D] rounded-sm p-2 mb-12 flex justify-self-center">
           <div className="grid grid-cols-[3fr_2fr] w-full gap-4 lg:h-[300px] sm:h-[250px] md:h-[300px]">
             <div className="bg-[#f5f3f0] border-2 border-gray-200 rounded-sm flex items-center justify-center p-4">
-              <p className="text-center font-dancing font-semibold textAnimated lg:text-[26px]">
-                Criação com amor
+              <p className="text-center font-dancing font-semibold textAnimated lg:text-[26px] text-[#4A290D]">
+                Criação com amor!
               </p>
             </div>
             <div className="border-2 border-gray-200 rounded-sm bg-[#f5f3f0] flex items-center">
