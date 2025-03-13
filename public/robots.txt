@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://ottocanil.com
+
+# Sitemaps
+Sitemap: https://ottocanil.com/sitemap.xml
