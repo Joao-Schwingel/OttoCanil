@@ -9,7 +9,7 @@ export function Footer() {
             <h3 className="text-lg font-semibold mb-2">Contato</h3>
             <p className="text-sm">Email: maluc.schwingel@gmail.com</p>
             <a  
-              href="https://wa.me/51999965953?text=Oi!%20Tenho%20interesse%20em%20alguns%20filhotes." 
+              href="https://wa.me/5551999965953?text=Oi!%20Tenho%20interesse%20em%20alguns%20filhotes." 
               className="ext-sm hover:underline flex items-center gap-2" 
               target="_blank" 
               rel="noopener noreferrer">
