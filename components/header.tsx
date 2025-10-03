@@ -38,7 +38,7 @@ export function Header() {
                 <Link href="/breeds/samoieda" onClick={() => setIsOpen(false)} className="text-lg">
                   Samoieda
                 </Link>
-                <Link href="/breeds/Chihuahua" onClick={() => setIsOpen(false)} className="text-lg">
+                <Link href="/breeds/chihuahua" onClick={() => setIsOpen(false)} className="text-lg">
                 Chihuahua
                 </Link>
                 <Link href="/breeds/husky-siberiano" onClick={() => setIsOpen(false)} className="text-lg">
