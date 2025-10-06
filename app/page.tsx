@@ -9,9 +9,6 @@ export const metadata = {
   title: 'Otto Canil - Cães de raça em Porto Alegre',
   description:
     'Canil de venda cachorros na região metropolitana de Porto Alegre',
-  icons: {
-    icon: '/favicon.ico'
-  },
   openGraph: {
     title: 'Otto Canil',
     description: 'Conheça nossos cães e filhotes disponíveis.',
