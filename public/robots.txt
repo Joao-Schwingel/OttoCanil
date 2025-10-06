@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://ottocanil.com
+Host: https://www.ottocanil.com/
 
 # Sitemaps
-Sitemap: https://ottocanil.com/sitemap.xml
+Sitemap: https://www.ottocanil.com/sitemap.xml

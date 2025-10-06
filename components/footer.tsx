@@ -8,13 +8,15 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-2">Contato</h3>
             <p className="text-sm">Email: maluc.schwingel@gmail.com</p>
-            <a  
-              href="https://wa.me/5551999965953?text=Oi!%20Tenho%20interesse%20em%20alguns%20filhotes." 
-              className="ext-sm hover:underline flex items-center gap-2" 
-              target="_blank" 
-              rel="noopener noreferrer">
+            <a
+              href="https://wa.me/5551999965953?text=Oi!%20Tenho%20interesse%20em%20alguns%20filhotes."
+              className="ext-sm hover:underline flex items-center gap-2"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Phone size={16} />
-              (51) 99943-7523</a>
+              (51) 99943-7523
+            </a>
             <p className="text-sm">Porto Alegre - RS</p>
           </div>
           <div>
@@ -25,22 +27,24 @@ export function Footer() {
           </div>
           <div>
             <h3 className="text-lg font-semibold mb-2">Redes Sociais</h3>
-            <a 
-              href="https://www.instagram.com/ottocanil_/" 
-              className="text-sm hover:underline flex gap-2 items-center" 
-              target="_blank" 
+            <a
+              href="https://www.instagram.com/ottocanil_/"
+              className="text-sm hover:underline flex gap-2 items-center"
+              target="_blank"
               rel="noreferrer"
             >
               <Instagram size={16}></Instagram>
-                Instagram
+              Instagram
             </a>
           </div>
         </div>
         <div className="border-t border-white/20 mt-8 pt-8 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} Otto Hundehütte. Todos os direitos reservados.</p>
+          <p>
+            &copy; {new Date().getFullYear()} Otto Hundehütte. Todos os direitos
+            reservados.
+          </p>
         </div>
       </div>
     </footer>
   );
 }
-

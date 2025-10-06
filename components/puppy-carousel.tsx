@@ -6,13 +6,13 @@ import { ChevronLeft, ChevronRight, Dog } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Puppy {
-  tags: string[]
-  url: string
-  public_id: string
+  tags: string[];
+  url: string;
+  public_id: string;
 }
 
 interface PuppyCarouselProps {
-  breed: string
+  breed: string;
 }
 
 export function PuppyCarousel({ breed }: PuppyCarouselProps) {
@@ -25,7 +25,9 @@ export function PuppyCarousel({ breed }: PuppyCarouselProps) {
     if (!isAutoPlaying) return;
 
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex === puppies.length - 1 ? 0 : prevIndex + 1));
+      setCurrentIndex((prevIndex) =>
+        prevIndex === puppies.length - 1 ? 0 : prevIndex + 1
+      );
     }, 3000);
 
     return () => clearInterval(interval);
@@ -41,8 +43,11 @@ export function PuppyCarousel({ breed }: PuppyCarouselProps) {
         const response = await fetch('/api/puppies');
         if (response.ok) {
           const data = await response.json();
-          const breedPuppies = data.resources.filter((puppy: Puppy) => 
-            puppy.tags.some(tag => tag.toLowerCase().replace(/\s+/g, '-') === breed.toLowerCase())
+          const breedPuppies = data.resources.filter((puppy: Puppy) =>
+            puppy.tags.some(
+              (tag) =>
+                tag.toLowerCase().replace(/\s+/g, '-') === breed.toLowerCase()
+            )
           );
           setPuppies(breedPuppies);
         } else {
@@ -60,11 +65,15 @@ export function PuppyCarousel({ breed }: PuppyCarouselProps) {
   }, []); // Removed unnecessary breed dependency
 
   const goToPrevious = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? puppies.length - 1 : prevIndex - 1));
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? puppies.length - 1 : prevIndex - 1
+    );
   };
 
   const goToNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === puppies.length - 1 ? 0 : prevIndex + 1));
+    setCurrentIndex((prevIndex) =>
+      prevIndex === puppies.length - 1 ? 0 : prevIndex + 1
+    );
   };
 
   if (isLoading) {
@@ -82,8 +91,12 @@ export function PuppyCarousel({ breed }: PuppyCarouselProps) {
     return (
       <div className="relative h-64 md:h-80 bg-gray-100 rounded-lg flex items-center justify-center">
         <div className="text-center">
-          <h3 className="text-xl font-semibold text-gray-700 mb-2">Filhotes em Breve!</h3>
-          <p className="text-gray-500">Estamos aguardando novos filhotes desta raça.</p>
+          <h3 className="text-xl font-semibold text-gray-700 mb-2">
+            Filhotes em Breve!
+          </h3>
+          <p className="text-gray-500">
+            Estamos aguardando novos filhotes desta raça.
+          </p>
         </div>
       </div>
     );
@@ -100,20 +113,28 @@ export function PuppyCarousel({ breed }: PuppyCarouselProps) {
   };
 
   return (
-    <div className="relative overflow-hidden"      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}>
+    <div
+      className="relative overflow-hidden"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <div className="flex items-center justify-center">
         <div className="relative w-full">
-          <div className='flex items-center w-full justify-center'>
-            <div className='absolute h-1 w-full bg-[#253c3c]'></div>
-            <h3 className='relative justify-self-center font-serif text-2xl bg-white'>FILHOTES</h3>
+          <div className="flex items-center w-full justify-center">
+            <div className="absolute h-1 w-full bg-[#4A290D]"></div>
+            <h3 className="relative justify-self-center font-serif font-normal text-2xl bg-white px-4 mb-6">
+              FILHOTES
+            </h3>
           </div>
           <div className="flex items-center justify-center gap-4">
             {/* Previous Puppy (Partially Visible) */}
             <div className="block w-1/4 opacity-50">
               <div className="aspect-square relative rounded-lg overflow-hidden">
                 <Image
-                  src={puppies[getPuppyIndex(currentIndex - 1)].url || '/placeholder.svg'}
+                  src={
+                    puppies[getPuppyIndex(currentIndex - 1)].url ||
+                    '/placeholder.svg'
+                  }
                   alt={`${breed} puppy`}
                   fill
                   style={{ objectFit: 'cover' }}
@@ -151,7 +172,9 @@ export function PuppyCarousel({ breed }: PuppyCarouselProps) {
                   >
                     <Dog className="w-4 h-4" />
                     <span className="ml-1 text-xs font-medium text-white">
-                      {puppies[currentIndex].tags[1] === 'M' ? 'Macho' : 'Fêmea'}
+                      {puppies[currentIndex].tags[1] === 'M'
+                        ? 'Macho'
+                        : 'Fêmea'}
                     </span>
                   </div>
                 </div>
@@ -162,7 +185,10 @@ export function PuppyCarousel({ breed }: PuppyCarouselProps) {
             <div className="block w-1/4 opacity-50">
               <div className="aspect-square relative rounded-lg overflow-hidden">
                 <Image
-                  src={puppies[getPuppyIndex(currentIndex + 1)].url || '/placeholder.svg'}
+                  src={
+                    puppies[getPuppyIndex(currentIndex + 1)].url ||
+                    '/placeholder.svg'
+                  }
                   alt={`${breed} puppy`}
                   fill
                   style={{ objectFit: 'cover' }}
@@ -205,4 +231,3 @@ export function PuppyCarousel({ breed }: PuppyCarouselProps) {
     </div>
   );
 }
-

@@ -4,6 +4,31 @@ import { Card, CardContent } from '@/components/ui/card';
 import Image from 'next/image';
 import './page.css';
 
+// app/page.tsx
+export const metadata = {
+  title: 'Otto Canil - Cães de raça em Porto Alegre',
+  description:
+    'Canil de venda cachorros na região metropolitana de Porto Alegre',
+  icons: {
+    icon: '/favicon.ico'
+  },
+  openGraph: {
+    title: 'Otto Canil',
+    description: 'Conheça nossos cães e filhotes disponíveis.',
+    url: 'https://www.ottocanil.com',
+    siteName: 'Otto Canil',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630
+      }
+    ],
+    locale: 'pt_BR',
+    type: 'website'
+  }
+};
+
 const breeds = [
   { name: 'Shih Tzu' },
   { name: 'Golden Retriver' },
@@ -44,7 +69,7 @@ export default function Home() {
           </h2>
         </div>
         {/* Breeds Section */}
-        <div className="mb-12 pt-12 p-12">
+        <div className="mb-12 pt-12">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {breeds.map((breed) => (
               <Link
@@ -95,7 +120,7 @@ export default function Home() {
             <div className="grid md:grid-cols-3 gap-6 md:gap-8">
               <div className="text-center">
                 <p className="mb-4 text-sm md:text-base italic">
-                "Hoje levei a BB no veterinário, e ele me falou pra eu dar
+                  "Hoje levei a BB no veterinário, e ele me falou pra eu dar
                   parabéns a vcs pq a BB está em excelente saúde física, mental
                   .... Elogiou muito…"
                 </p>
@@ -105,7 +130,7 @@ export default function Home() {
               </div>
               <div className="text-center">
                 <p className="mb-4 text-sm md:text-base italic">
-                "Lugar incrível, onde os animais são muito bem cuidados e
+                  "Lugar incrível, onde os animais são muito bem cuidados e
                   recebem muito amor e carinho, recomendo 100%!"
                 </p>
                 {/* <span className="text-xs md:text-sm opacity-75">
@@ -114,7 +139,7 @@ export default function Home() {
               </div>
               <div className="text-center">
                 <p className="mb-4 text-sm md:text-base italic">
-                "Ontem tivemos que levar ele numa veterinária, ela ficou
+                  "Ontem tivemos que levar ele numa veterinária, ela ficou
                   impressionada com a “pureza”….ela disse que fazia tempo que
                   não via um Shih tzu tão perfeito…."
                 </p>
@@ -154,15 +179,15 @@ export default function Home() {
                   Determinados a preservar o compromisso com o cuidado e a
                   preservação das raças puras, eles seguem com a missão de
                   tornar o Otto Canil como referência para todos os amantes de
-                  cães, mantendo vivo o legado de amor e dedicação
-                  criado pelo pai
+                  cães, mantendo vivo o legado de amor e dedicação criado pelo
+                  pai
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-4 sm:grid-rows-2 md:grid-rows-1">
                 <div className="aspect-square border-2 border-gray-200 rounded-lg relative">
                   <Image
                     src="/images/nossa_historia3.jpg"
-                    alt="our history" 
+                    alt="our history"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
                     style={{ objectFit: 'cover', objectPosition: 'center' }}

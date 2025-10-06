@@ -2,18 +2,55 @@ import { notFound } from 'next/navigation';
 import { RatingDisplay } from '@/components/rating-display';
 import { PuppyCarousel } from '@/components/puppy-carousel';
 
+export async function generateMetadata({
+  params
+}: {
+  params: { breed: string };
+}) {
+  const breed = breedData[params.breed];
+
+  if (!breed) {
+    return {
+      title: 'Raça não encontrada | Otto Canil',
+      description:
+        'Desculpe, a raça solicitada não foi encontrada no Otto Canil.'
+    };
+  }
+
+  return {
+    title: `Filhotes de ${breed.name} em Porto Alegre e região | Otto Canil`,
+    description: breed.description.replace(/\n/g, ' ').slice(0, 160),
+    openGraph: {
+      title: `Filhotes de ${breed.name} | Otto Canil`,
+      description: breed.description.replace(/\n/g, ' ').slice(0, 160),
+      url: `https://teusite.com/filhotes/${params.breed}`,
+      siteName: 'Otto Canil',
+      images: [
+        {
+          url: `https://teusite.com${breed.image}`,
+          width: 1200,
+          height: 630,
+          alt: `Filhotes de ${breed.name}`
+        }
+      ],
+      locale: 'pt_BR',
+      type: 'website'
+    }
+  };
+}
+
 interface BreedData {
-  name: string
-  description: string
-  image: string
+  name: string;
+  description: string;
+  image: string;
   characteristics: {
-    label: string
-    rating: number
-  }[]
+    label: string;
+    rating: number;
+  }[];
   specs: {
-    label: string
-    value: string
-  }[]
+    label: string;
+    value: string;
+  }[];
 }
 
 const breedData: Record<string, BreedData> = {
@@ -172,7 +209,7 @@ const breedData: Record<string, BreedData> = {
       { label: 'Peso', value: '1,5kg-3,5kg' }
     ]
   },
-  'chihuahua': {
+  chihuahua: {
     name: 'Chihuahua',
     description: `O  Chihuahua  é  uma  das  menores  raças  de  cães  do  mundo,  mas  o  tamanho 
     reduzido é compensado por uma personalidade vibrante e destemida. Esses cães 
@@ -211,7 +248,7 @@ const breedData: Record<string, BreedData> = {
       { label: 'Peso', value: '1,5-3kg' }
     ]
   },
-  'samoieda': {
+  samoieda: {
     name: 'Samoieada',
     description: `O  Samoieda  é  uma  raça encantadora. Esse cão de porte grande apresenta um 
     corpo  robusto,  com  altura  entre  50  e  60  cm  e  peso  variando  de  20  a  40  kg, 
@@ -283,7 +320,10 @@ const breedData: Record<string, BreedData> = {
     specs: [
       { label: 'Expectativa de vida', value: '12 a 15 anos' },
       { label: 'Tamanho adulto', value: 'Grande' },
-      { label: 'Cor', value: 'Cinza e branco, preto e branco, marrom e branco' },
+      {
+        label: 'Cor',
+        value: 'Cinza e branco, preto e branco, marrom e branco'
+      },
       { label: 'Pelo', value: 'Longo' },
       { label: 'Tempo regular banho', value: '15 a 30 dias' },
       { label: 'Altura', value: '53-60cm' },
@@ -305,18 +345,27 @@ export default function BreedPage({ params }: { params: { breed: string } }) {
         {/* Left Column - Image */}
         <div className="space-y-6">
           <div className="aspect-square rounded-lg">
-            <img src={`${breed.image}`} alt={breed.name} className="w-full h-full object-cover rounded-lg" />
+            <img
+              src={`${breed.image}`}
+              alt={breed.name}
+              className="w-full h-full object-cover rounded-lg"
+            />
           </div>
           <PuppyCarousel breed={params.breed} />
         </div>
 
         {/* Right Column - Content */}
         <div className="space-y-6">
-          <h1 className="text-2xl md:text-3xl font-serif text-[#253c3c]">{breed.name}</h1>
+          <h1 className="text-2xl md:text-3xl font-serif text-[#4A290D]">
+            Filhotes de {breed.name}
+          </h1>
 
           <div className="prose max-w-none">
             {breed.description.split('\n\n').map((paragraph, index) => (
-              <p key={index} className="text-sm md:text-base text-gray-600 text-justify mb-3">
+              <p
+                key={index}
+                className="text-sm md:text-base text-gray-600 text-justify mb-3"
+              >
                 {paragraph}
               </p>
             ))}
@@ -336,17 +385,19 @@ export default function BreedPage({ params }: { params: { breed: string } }) {
           <div className="space-y-3">
             {breed.characteristics.map((char) => (
               <div key={char.label} className="flex items-center gap-4">
-                <span className="text-xs md:text-sm w-32 md:w-48">{char.label}</span>
+                <span className="text-xs md:text-sm w-32 md:w-48">
+                  {char.label}
+                </span>
                 <RatingDisplay rating={char.rating} />
               </div>
             ))}
           </div>
 
           {/* Action Button */}
-          <a 
+          <a
             href={`https://wa.me/5551999965953?text=Olá,%20bom%20dia!Tenho%20interesse%20em%20saber%20mais%20sobre%20os%20filhotes%20da%20raça%20${breed.name}`}
             className="w-full bg-[#4A290D] text-white py-2 px-4 rounded-md hover:bg-opacity-90 transition-colors text-sm md:text-base text-center block"
-            target="_blank" 
+            target="_blank"
             rel="noopener noreferrer"
           >
             Entrar em contato
@@ -356,4 +407,3 @@ export default function BreedPage({ params }: { params: { breed: string } }) {
     </div>
   );
 }
-

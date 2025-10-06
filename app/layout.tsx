@@ -13,7 +13,7 @@ const inter = Inter({ subsets: ['latin'] });
 export default function RootLayout({
   children
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="pt-BR">
@@ -27,4 +27,3 @@ export default function RootLayout({
     </html>
   );
 }
-

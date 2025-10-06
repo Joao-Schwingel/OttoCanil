@@ -4,7 +4,7 @@ import cloudinary from '@/utils/cloudinary';
 export async function GET() {
   try {
     const result = await cloudinary.search
-      .expression('resource_type:image') 
+      .expression('resource_type:image')
       .fields('url')
       .fields('tags')
       .fields('public_id')
@@ -12,16 +12,15 @@ export async function GET() {
       .sort_by('created_at', 'desc')
       .execute();
 
-      
-
     return NextResponse.json(result);
   } catch (error) {
     console.error('Error fetching puppies from Cloudinary:', error);
-    return NextResponse.json({ error: 'Failed to fetch images' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to fetch images' },
+      { status: 500 }
+    );
   }
 }
-
-
 
 export async function POST(request: Request) {
   try {
@@ -29,7 +28,10 @@ export async function POST(request: Request) {
 
     // Validate input
     if (!breed || !imageUrl || !publicId) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Missing required fields' },
+        { status: 400 }
+      );
     }
 
     // Update the image metadata in Cloudinary
@@ -40,7 +42,10 @@ export async function POST(request: Request) {
 
     if (!updateResult || updateResult.error) {
       console.error('Error updating Cloudinary metadata:', updateResult.error);
-      return NextResponse.json({ error: 'Failed to update image metadata' }, { status: 500 });
+      return NextResponse.json(
+        { error: 'Failed to update image metadata' },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({
@@ -57,4 +62,3 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Failed to add puppy' }, { status: 500 });
   }
 }
-

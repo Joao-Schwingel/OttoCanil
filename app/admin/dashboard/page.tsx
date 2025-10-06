@@ -4,14 +4,20 @@ import React, { useState, useEffect, use } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { CldUploadWidget } from 'next-cloudinary';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '../../../components/ui/select';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 interface Puppy {
-  tags: string[]
-  url: string
-  public_id: string
+  tags: string[];
+  url: string;
+  public_id: string;
 }
 
 const breedOptions = [
@@ -61,15 +67,13 @@ export default function AdminDashboard() {
     }
   };
 
-  
-
   const handleDelete = async (puppy: Puppy) => {
     try {
       setLoading(true);
       const response = await fetch(`/api/puppies/${puppy.public_id}`, {
         method: 'DELETE'
       });
-  
+
       if (response.ok) {
         await fetchPuppies(); // Atualiza a lista após deletar
         console.log('Puppy deleted successfully');
@@ -88,16 +92,14 @@ export default function AdminDashboard() {
       setSelectedBreed(breed);
     }, 1);
   };
-  
+
   useEffect(() => {
     setBreedForUpload(selectedBreed);
-  }
-  , [selectedBreed]);
+  }, [selectedBreed]);
 
   if (status === 'loading') {
     return <div>Loading...</div>;
   }
-
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -120,21 +122,42 @@ export default function AdminDashboard() {
           </Select>
           <RadioGroup defaultValue="M">
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="F" id="r1" aria-label="Fêmea" onClick={() => setSexo('F')}/>
+              <RadioGroupItem
+                value="F"
+                id="r1"
+                aria-label="Fêmea"
+                onClick={() => setSexo('F')}
+              />
               <Label htmlFor="r1">FEMEA</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="M" id="r2" aria-label="Macho" onClick={() => setSexo('M')}/>
+              <RadioGroupItem
+                value="M"
+                id="r2"
+                aria-label="Macho"
+                onClick={() => setSexo('M')}
+              />
               <Label htmlFor="r2">MACHO</Label>
             </div>
           </RadioGroup>
-          {selectedBreed && (<CldUploadWidget uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET} options={{ tags: [selectedBreed, sexo]}} onUpload={fetchPuppies}>
-            {({ open }) => (
-              <button onClick={() => {open();}} className="bg-green-500 text-white px-4 py-2 rounded">
-                Upload Image
-              </button>
-            )}
-          </CldUploadWidget>)}
+          {selectedBreed && (
+            <CldUploadWidget
+              uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+              options={{ tags: [selectedBreed, sexo] }}
+              onUpload={fetchPuppies}
+            >
+              {({ open }) => (
+                <button
+                  onClick={() => {
+                    open();
+                  }}
+                  className="bg-green-500 text-white px-4 py-2 rounded"
+                >
+                  Upload Image
+                </button>
+              )}
+            </CldUploadWidget>
+          )}
         </div>
       </div>
 
@@ -162,7 +185,11 @@ export default function AdminDashboard() {
               >
                 {puppy.tags[1] == 'active' ? 'Mark Unavailable' : 'Mark Available'}
               </button> */}
-              <button onClick={() => handleDelete(puppy)} className={`${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-red-500 hover:bg-red-600'} text-white px-2 py-1 rounded `} disabled={loading}>
+              <button
+                onClick={() => handleDelete(puppy)}
+                className={`${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-red-500 hover:bg-red-600'} text-white px-2 py-1 rounded `}
+                disabled={loading}
+              >
                 Delete
               </button>
             </div>
@@ -172,4 +199,3 @@ export default function AdminDashboard() {
     </div>
   );
 }
-
