@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Menu } from 'lucide-react';
+import Image from 'next/image';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,8 +16,14 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           <Link
             href="/"
-            className="text-xl md:text-2xl font-serif hover:text-gray-200 transition-colors"
+            className="text-xl md:text-2xl font-serif hover:text-gray-200 transition-colors flex items-center justify-start gap-2"
           >
+            <Image
+              src={'/images/logoCanil.png'}
+              alt={'logo'}
+              width={52}
+              height={52}
+            ></Image>
             Otto Hundehütte
           </Link>
 
