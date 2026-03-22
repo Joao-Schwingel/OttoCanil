@@ -2,229 +2,533 @@
 import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import Image from 'next/image';
-import './page.css';
+import { Phone, Star, Shield, Heart } from 'lucide-react';
+import { ScrollToBreeds } from '@/components/scroll-to-breeds';
 
-// app/page.tsx
 export const metadata = {
-  title: 'Otto Canil - Cães de raça em Porto Alegre',
+  title:
+    'Otto Canil - Filhotes de Raça Pura em Porto Alegre | Compre com Segurança',
   description:
-    'Canil de venda cachorros na região metropolitana de Porto Alegre',
-  openGraph: {
-    title: 'Otto Canil',
-    description: 'Conheça nossos cães e filhotes disponíveis.',
-    url: 'https://www.ottocanil.com',
-    siteName: 'Otto Canil',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630
-      }
-    ],
-    locale: 'pt_BR',
-    type: 'website'
+    'Filhotes saudáveis e de raça pura em Porto Alegre. Shih Tzu, Golden Retriever, Bulldog Francês, Samoieda, Chihuahua, Husky Siberiano e Spitz Alemão. Vacinados, vermifugados e criados com amor desde 2019. Entrega em toda região metropolitana.',
+  alternates: {
+    canonical: 'https://www.ottocanil.com'
   }
 };
 
 const breeds = [
-  { name: 'Shih Tzu' },
-  { name: 'Golden Retriver' },
-  { name: 'Bulldog Frances' },
-  { name: 'Samoieda' },
-  { name: 'Chihuahua' },
-  { name: 'Husky Siberiano' },
-  { name: 'Spitz Alemao' }
+  {
+    name: 'Shih Tzu',
+    slug: 'shih-tzu',
+    image: 'shihtzu',
+    tag: 'Companheiro ideal'
+  },
+  {
+    name: 'Golden Retriever',
+    slug: 'golden-retriver',
+    image: 'goldenretriver',
+    tag: 'Amigo da família'
+  },
+  {
+    name: 'Bulldog Francês',
+    slug: 'bulldog-frances',
+    image: 'bulldogfrances',
+    tag: 'Perfeito p/ apto'
+  },
+  {
+    name: 'Samoieda',
+    slug: 'samoieda',
+    image: 'samoieda',
+    tag: 'Sorriso encantador'
+  },
+  {
+    name: 'Chihuahua',
+    slug: 'chihuahua',
+    image: 'chihuahua',
+    tag: 'Pequeno e valente'
+  },
+  {
+    name: 'Husky Siberiano',
+    slug: 'husky-siberiano',
+    image: 'huskysiberiano',
+    tag: 'Aventureiro nato'
+  },
+  {
+    name: 'Spitz Alemão',
+    slug: 'spitz-alemao',
+    image: 'spitzalemao',
+    tag: 'Fofo e animado'
+  }
 ];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': 'https://www.ottocanil.com',
+  name: 'Otto Canil',
+  alternateName: 'Otto Hundehütte',
+  description:
+    'Canil em Porto Alegre especializado em filhotes de raça pura. Criação responsável desde 2019.',
+  url: 'https://www.ottocanil.com',
+  telephone: '+5551999965953',
+  email: 'maluc.schwingel@gmail.com',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Porto Alegre',
+    addressRegion: 'RS',
+    addressCountry: 'BR'
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: -30.0346,
+    longitude: -51.2177
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '09:00',
+      closes: '18:00'
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: 'Saturday',
+      opens: '09:00',
+      closes: '14:00'
+    }
+  ],
+  image: 'https://www.ottocanil.com/images/logoCanil.png',
+  priceRange: '$$',
+  sameAs: ['https://www.instagram.com/ottocanil_/'],
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '5',
+    reviewCount: '3'
+  }
+};
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[var(--background)]">
-      <section className="container mx-auto px-4 py-8">
-        {/* Hero Section */}
-        <div className="border-4 border-[#4A290D] bg-[#4A290D] rounded-sm p-2 mb-12 flex justify-self-center">
-          <div className="grid grid-cols-[3fr_2fr] w-full gap-4 lg:h-[300px] sm:h-[250px] md:h-[300px]">
-            <div className="bg-[#f5f3f0] border-2 border-gray-200 rounded-sm flex items-center justify-center p-4">
-              <p className="text-center font-dancing font-semibold textAnimated lg:text-[26px] text-[#4A290D]">
-                Criação com amor!
+    <div className="min-h-screen bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      {/* Hero Section */}
+      <section className="relative bg-brand-brown">
+        <div className="container mx-auto px-4 py-12 md:py-20">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="text-center md:text-left space-y-6">
+              <h1 className="text-3xl md:text-5xl font-playfair text-white leading-tight">
+                Encontre o{' '}
+                <span className="text-brand-gold">companheiro perfeito</span>{' '}
+                para sua família
+              </h1>
+              <p className="text-white/80 text-base md:text-lg max-w-lg">
+                Filhotes saudáveis, de raça pura, criados com amor e
+                responsabilidade. Todos vacinados, vermifugados e com
+                acompanhamento veterinário.
               </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+                <a
+                  href="https://wa.me/5551999965953?text=Ol%C3%A1!%20Quero%20conhecer%20os%20filhotes%20dispon%C3%ADveis."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 bg-brand-gold hover:bg-brand-gold-light text-white hover:text-brand-brown px-8 py-4 rounded-full text-base font-bold transition-[background-color,color,transform] duration-200 hover:scale-105 cursor-pointer"
+                >
+                  <Phone className="w-5 h-5" aria-hidden="true" />
+                  Quero Meu Filhote
+                </a>
+                <ScrollToBreeds />
+              </div>
             </div>
-            <div className="border-2 border-gray-200 rounded-sm bg-[#f5f3f0] flex items-center">
-              <Image
-                src={'/images/logo_final.png'}
-                alt={'logo'}
-                width={275}
-                height={275}
-                className="aspect-square rounded-lg mb-2 object-contain bg-[#f5f3f0] justify-self-center self-center "
-              />
+            <div className="flex items-center justify-center">
+              <div className="relative w-[200px] h-[200px] md:w-[280px] md:h-[280px]">
+                <div className="absolute inset-0 rounded-full scale-110" />
+                <Image
+                  src="/images/logoCanil.png"
+                  alt="Otto Canil - Criação com amor"
+                  width={280}
+                  height={280}
+                  className="relative z-10 w-full h-full object-contain drop-shadow-2xl"
+                  priority
+                />
+              </div>
             </div>
           </div>
         </div>
+      </section>
 
-        <div className="absolute inline-block mb-6 left-0 w-[20%] text-center ">
-          <h2 className="bg-[#4A290D] text-white px-4 py-1 text-lg md:text-xl realtive z-10 rounded-r-full tracking-[1rem] w-min">
-            Raças
-          </h2>
+      {/* Trust Badges */}
+      <section className="bg-brand-cream-dark border-y border-brand-gold/20">
+        <div className="container mx-auto px-4 py-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div className="flex flex-col items-center gap-2">
+              <Shield className="w-6 h-6 text-brand-gold" aria-hidden="true" />
+              <span className="text-xs md:text-sm font-medium text-brand-brown">
+                Saúde Garantida
+              </span>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <Heart className="w-6 h-6 text-brand-gold" aria-hidden="true" />
+              <span className="text-xs md:text-sm font-medium text-brand-brown">
+                Criação com Amor
+              </span>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <Star className="w-6 h-6 text-brand-gold" aria-hidden="true" />
+              <span className="text-xs md:text-sm font-medium text-brand-brown">
+                Raça Pura
+              </span>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <Phone className="w-6 h-6 text-brand-gold" aria-hidden="true" />
+              <span className="text-xs md:text-sm font-medium text-brand-brown">
+                Suporte Pós-Venda
+              </span>
+            </div>
+          </div>
         </div>
-        {/* Breeds Section */}
-        <div className="mb-12 pt-12">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {breeds.map((breed) => (
-              <Link
-                key={breed.name}
-                href={`/breeds/${breed.name
-                  .toLowerCase()
-                  .replace(/\s+/g, '-')}`}
-                className="group"
-              >
-                <Card className="border-none hover:shadow-lg transition-shadow">
-                  <CardContent className="p-2 md:p-3">
+      </section>
+
+      {/* Breeds Section */}
+      <section
+        id="racas"
+        className="container mx-auto px-4 py-12 md:py-16 scroll-mt-20"
+      >
+        <div className="text-center mb-10">
+          <h2 className="text-2xl md:text-4xl font-playfair text-brand-brown mb-3">
+            Nossas Raças
+          </h2>
+          <p className="text-muted-foreground max-w-xl mx-auto">
+            Escolha a raça ideal para o seu estilo de vida. Clique para ver os
+            filhotes disponíveis e saber mais sobre cada raça.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+          {breeds.map((breed) => (
+            <Link key={breed.slug} href={`/breeds/${breed.slug}`}>
+              <Card className="group border-none shadow-sm hover:shadow-xl transition-shadow duration-300 overflow-hidden cursor-pointer bg-white">
+                <CardContent className="p-0">
+                  <div className="relative overflow-hidden">
                     <Image
-                      src={`/images/breeds/${breed.name
-                        .toLowerCase()
-                        .replace(/\s+/g, '')}.jpg`}
-                      alt={'schitzu'}
-                      width={300}
-                      height={300}
-                      className="aspect-square border-2 border-gray-200 rounded-lg mb-2 object-cover"
+                      src={`/images/breeds/${breed.image}.jpg`}
+                      alt={`Filhotes de ${breed.name} - Otto Canil`}
+                      width={400}
+                      height={400}
+                      className="aspect-square object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <h3 className="text-center text-xs md:text-sm font-medium">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <span className="absolute bottom-3 left-3 right-3 text-white text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center">
+                      Ver filhotes
+                    </span>
+                  </div>
+                  <div className="p-3 md:p-4 text-center">
+                    <h3 className="text-sm md:text-base font-semibold text-brand-brown">
                       {breed.name}
                     </h3>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {breed.tag}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* CTA Banner */}
+      <section className="bg-brand-brown">
+        <div className="container mx-auto px-4 py-10 md:py-14 text-center">
+          <h2 className="text-2xl md:text-3xl font-playfair text-white mb-3">
+            Apaixonou-se por uma raça?
+          </h2>
+          <p className="text-white/80 mb-6 max-w-lg mx-auto">
+            Entre em contato agora mesmo e descubra quais filhotes estão
+            disponíveis. Atendemos Porto Alegre e região metropolitana.
+          </p>
+          <a
+            href="https://wa.me/5551999965953?text=Ol%C3%A1!%20Vi%20o%20site%20e%20quero%20saber%20sobre%20filhotes%20dispon%C3%ADveis."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-brand-gold hover:bg-brand-gold-light text-white hover:text-brand-brown px-8 py-4 rounded-full text-base font-bold transition-[background-color,color,transform] duration-200 hover:scale-105 cursor-pointer"
+          >
+            <Phone className="w-5 h-5" aria-hidden="true" />
+            Consultar Filhotes Disponíveis
+          </a>
+        </div>
+      </section>
+
+      {/* Full Width Image */}
+      <section className="relative h-[200px] md:h-[350px] w-full">
+        <Image
+          src="/images/fullImage.jpg"
+          alt="Cães felizes e saudáveis no Otto Canil"
+          fill
+          sizes="100vw"
+          loading="lazy"
+          style={{ objectFit: 'cover', objectPosition: '50% 70%' }}
+          className="w-full h-full"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/30" />
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="container mx-auto px-4 py-12 md:py-16">
+        <div className="text-center mb-10">
+          <h2 className="text-2xl md:text-4xl font-playfair text-brand-brown mb-3">
+            O Que Nossos Clientes Dizem
+          </h2>
+          <p className="text-muted-foreground">
+            A satisfação de quem já levou um filhote para casa
+          </p>
         </div>
 
-        {/* Testimonials Section */}
-        <section className="mt-16">
-          <div className="relative h-[200px] md:h-[300px] w-full mb-8">
-            <Image
-              src="/images/fullImage.jpg"
-              alt="Relaxed dog"
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              style={{ objectFit: 'cover', objectPosition: '50% 70%' }}
-              className="w-full h-full rounded-lg"
-            />
+        <div className="grid md:grid-cols-3 gap-6">
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-border">
+            <div className="flex gap-1 mb-4">
+              {[1, 2, 3, 4, 5].map((s) => (
+                <Star
+                  key={s}
+                  className="w-4 h-4 fill-brand-gold text-brand-gold"
+                  aria-hidden="true"
+                />
+              ))}
+            </div>
+            <p className="text-sm md:text-base text-foreground/80 italic mb-4">
+              "Hoje levei a BB no veterinário, e ele me falou pra eu dar
+              parabéns a vcs pq a BB está em excelente saúde física, mental...
+              Elogiou muito!"
+            </p>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-brand-cream-dark flex items-center justify-center">
+                <span className="text-brand-brown font-semibold text-sm">
+                  C
+                </span>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-brand-brown">
+                  Cliente Satisfeito
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Tutor de Shih Tzu
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div className="bg-[#4A290D] rounded-lg p-4 md:p-8 text-white mb-16">
-            <h2 className="text-xl md:text-2xl text-center mb-6 md:mb-8 font-serif border-b-2 border-white w-[50%] place-self-center">
-              Depoimentos de clientes
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-border">
+            <div className="flex gap-1 mb-4">
+              {[1, 2, 3, 4, 5].map((s) => (
+                <Star
+                  key={s}
+                  className="w-4 h-4 fill-brand-gold text-brand-gold"
+                  aria-hidden="true"
+                />
+              ))}
+            </div>
+            <p className="text-sm md:text-base text-foreground/80 italic mb-4">
+              "Lugar incrível, onde os animais são muito bem cuidados e recebem
+              muito amor e carinho, recomendo 100%!"
+            </p>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-brand-cream-dark flex items-center justify-center">
+                <span className="text-brand-brown font-semibold text-sm">
+                  C
+                </span>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-brand-brown">
+                  Cliente Satisfeito
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Visitante do Canil
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-border">
+            <div className="flex gap-1 mb-4">
+              {[1, 2, 3, 4, 5].map((s) => (
+                <Star
+                  key={s}
+                  className="w-4 h-4 fill-brand-gold text-brand-gold"
+                  aria-hidden="true"
+                />
+              ))}
+            </div>
+            <p className="text-sm md:text-base text-foreground/80 italic mb-4">
+              "A veterinária ficou impressionada com a pureza... disse que fazia
+              tempo que não via um Shih Tzu tão perfeito!"
+            </p>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-brand-cream-dark flex items-center justify-center">
+                <span className="text-brand-brown font-semibold text-sm">
+                  C
+                </span>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-brand-brown">
+                  Cliente Satisfeito
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Tutor de Shih Tzu
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our History Section */}
+      <section className="bg-brand-cream-dark overflow-hidden">
+        <div className="container mx-auto px-4 py-16 md:py-24">
+          {/* Section Header */}
+          <div className="text-center mb-12 md:mb-16">
+            <span className="text-brand-gold font-semibold text-sm uppercase tracking-widest">
+              Desde 2019
+            </span>
+            <h2 className="text-3xl md:text-5xl font-playfair text-brand-brown mt-2 mb-4">
+              Nossa História
             </h2>
-            <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-              <div className="text-center">
-                <p className="mb-4 text-sm md:text-base italic">
-                  "Hoje levei a BB no veterinário, e ele me falou pra eu dar
-                  parabéns a vcs pq a BB está em excelente saúde física, mental
-                  .... Elogiou muito…"
-                </p>
-                {/* <span className="text-xs md:text-sm opacity-75">
-                  - Ricardo Santos
-                </span> */}
-              </div>
-              <div className="text-center">
-                <p className="mb-4 text-sm md:text-base italic">
-                  "Lugar incrível, onde os animais são muito bem cuidados e
-                  recebem muito amor e carinho, recomendo 100%!"
-                </p>
-                {/* <span className="text-xs md:text-sm opacity-75">
-                  - Fernanda Santos
-                </span> */}
-              </div>
-              <div className="text-center">
-                <p className="mb-4 text-sm md:text-base italic">
-                  "Ontem tivemos que levar ele numa veterinária, ela ficou
-                  impressionada com a “pureza”….ela disse que fazia tempo que
-                  não via um Shih tzu tão perfeito…."
-                </p>
-                {/* <span className="text-xs md:text-sm opacity-75">
-                  - Sofia Santos
-                </span> */}
-              </div>
-            </div>
+            <p className="text-muted-foreground max-w-md mx-auto text-sm md:text-base">
+              Uma família unida pelo amor aos animais e pela dedicação à criação
+              responsável.
+            </p>
           </div>
 
-          {/* Our History Section */}
-          <div className="mb-16">
-            <div className="relative text-center mb-8 md:mb-12">
-              <h2 className="text-2xl md:text-3xl font-serif inline-block px-4 bg-[#f5f3f0] relative z-10">
-                Nossa Historia
-              </h2>
-              <div className="absolute left-0 right-0 top-1/2 h-1 bg-gray-300 -z-0" />
+          {/* Featured Image + Story */}
+          <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center mb-12 md:mb-16">
+            {/* Featured Image - Marcos with Samoiedas */}
+            <div className="lg:col-span-3 relative">
+              <div className="relative rounded-2xl overflow-hidden shadow-xl">
+                <Image
+                  src="/images/nossa_historia3.jpg"
+                  alt="Marcos, fundador do Otto Canil, com filhotes de Samoieda"
+                  width={800}
+                  height={600}
+                  loading="lazy"
+                  className="w-full h-[300px] md:h-[450px] object-contain"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-brown/60 via-transparent to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-5 md:p-8">
+                  <p className="text-white/90 text-sm md:text-base font-medium">
+                    Marcos, fundador do Otto Canil, com seus Samoiedas
+                  </p>
+                  <p className="text-white/60 text-xs md:text-sm mt-1">
+                    O sonho que deu início a tudo
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <div className="flex flex-col gap-8">
-              <div className="space-y-4 md:space-y-6">
-                <p className="text-sm md:text-base text-gray-600">
-                  O Otto Canil foi inaugurado em 2019, fruto da paixão de Marcos
-                  pelos animais e do seu objetivo de preservar as raças puras.
-                  Ele sempre sonhou em criar um espaço dedicado a esse
-                  propósito, onde pudesse conciliar seu amor pelos animais com a
-                  oportunidade de oferecer um ambiente que garantisse o
-                  bem-estar deles.
+            {/* Timeline Story */}
+            <div className="lg:col-span-2 space-y-6">
+              <div className="relative pl-6 border-l-2 border-brand-gold/30">
+                <div className="absolute left-[-9px] top-1 w-4 h-4 rounded-full bg-brand-gold" />
+                <span className="text-brand-gold font-bold text-sm">2019</span>
+                <h3 className="text-base md:text-lg font-playfair text-brand-brown mt-1 mb-2">
+                  O Início do Sonho
+                </h3>
+                <p className="text-sm text-foreground/70 leading-relaxed">
+                  Marcos inaugurou o Otto Canil, fruto da sua paixão pelos
+                  animais e do objetivo de preservar as raças puras, criando um
+                  espaço dedicado ao bem-estar e à criação responsável.
                 </p>
-                <p className="text-sm md:text-base text-gray-600">
-                  Infelizmente, em 2021, Marcos faleceu, deixando um legado de
-                  carinho pelos cães e um sonho que precisava ser continuado.
-                  Seus filhos, também apaixonados pelos animais e com o desejo
-                  de honrar a memória do pai, assumiram o canil.
+              </div>
+
+              <div className="relative pl-6 border-l-2 border-brand-gold/30">
+                <div className="absolute left-[-9px] top-1 w-4 h-4 rounded-full bg-brand-gold/60" />
+                <span className="text-brand-gold font-bold text-sm">2021</span>
+                <h3 className="text-base md:text-lg font-playfair text-brand-brown mt-1 mb-2">
+                  Um Legado de Amor
+                </h3>
+                <p className="text-sm text-foreground/70 leading-relaxed">
+                  Marcos faleceu, mas deixou um legado de carinho pelos cães.
+                  Seus filhos, igualmente apaixonados, assumiram o canil com o
+                  desejo de honrar a memória do pai.
                 </p>
-                <p className="text-sm md:text-base text-gray-600">
+              </div>
+
+              <div className="relative pl-6 border-l-2 border-brand-gold/30">
+                <div className="absolute left-[-9px] top-1 w-4 h-4 rounded-full bg-brand-gold" />
+                <span className="text-brand-gold font-bold text-sm">Hoje</span>
+                <h3 className="text-base md:text-lg font-playfair text-brand-brown mt-1 mb-2">
+                  Continuando a Missão
+                </h3>
+                <p className="text-sm text-foreground/70 leading-relaxed">
                   Determinados a preservar o compromisso com o cuidado e a
-                  preservação das raças puras, eles seguem com a missão de
-                  tornar o Otto Canil como referência para todos os amantes de
-                  cães, mantendo vivo o legado de amor e dedicação criado pelo
-                  pai
+                  criação responsável, a família segue tornando o Otto Canil
+                  referência para todos os amantes de cães.
                 </p>
-              </div>
-              <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-4 sm:grid-rows-2 md:grid-rows-1">
-                <div className="aspect-square border-2 border-gray-200 rounded-lg relative">
-                  <Image
-                    src="/images/nossa_historia3.jpg"
-                    alt="our history"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    style={{ objectFit: 'cover', objectPosition: 'center' }}
-                    className="w-full h-full rounded-lg"
-                  />
-                </div>
-                <div className="aspect-square border-2 border-gray-200 rounded-lg relative">
-                  <Image
-                    src="/images/nossa_historia2.jpg"
-                    alt="our history"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    style={{ objectFit: 'cover', objectPosition: 'center' }}
-                    className="w-full h-full rounded-lg"
-                  />
-                </div>
-                <div className="aspect-square border-2 border-gray-200 rounded-lg relative">
-                  <Image
-                    src="/images/nossa_historia.jpg"
-                    alt="our history"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    style={{ objectFit: 'cover', objectPosition: 'center' }}
-                    className="w-full h-full rounded-lg"
-                  />
-                </div>
-                <div className="aspect-square border-2 border-gray-200 rounded-lg relative">
-                  <Image
-                    src="/images/nossa_historia4.jpg"
-                    alt="our history"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    style={{ objectFit: 'cover', objectPosition: 'center' }}
-                    className="w-full h-full rounded-lg"
-                  />
-                </div>
               </div>
             </div>
           </div>
-        </section>
+
+          {/* Photo Mosaic */}
+          <div className="grid grid-cols-6 md:grid-cols-12 gap-3 md:gap-4">
+            {/* Image 4 - Daughter at farm - wide landscape */}
+            <div className="col-span-6 md:col-span-7 relative rounded-2xl overflow-hidden shadow-lg group">
+              <Image
+                src="/images/nossa_historia4.jpg"
+                alt="Família cuidando dos filhotes de Samoieda no canil"
+                width={700}
+                height={400}
+                loading="lazy"
+                className="w-full h-[200px] md:h-[280px] object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </div>
+
+            {/* Image 2 - Woman with dog - tall portrait */}
+            <div className="col-span-3 md:col-span-2 relative rounded-2xl overflow-hidden shadow-lg group">
+              <Image
+                src="/images/nossa_historia2.jpg"
+                alt="Família do Otto Canil com seus cães"
+                width={300}
+                height={400}
+                loading="lazy"
+                className="w-full h-[200px] md:h-[280px] object-cover object-top group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </div>
+
+            {/* Image 1 - Boy relaxing with dogs */}
+            <div className="col-span-3 md:col-span-3 relative rounded-2xl overflow-hidden shadow-lg group">
+              <Image
+                src="/images/nossa_historia.jpg"
+                alt="Convivência com os cães no espaço do canil"
+                width={400}
+                height={400}
+                loading="lazy"
+                className="w-full h-[200px] md:h-[280px] object-cover object-center group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="container mx-auto px-4 py-12 md:py-16 text-center">
+        <h2 className="text-2xl md:text-3xl font-playfair text-brand-brown mb-3">
+          Pronto para encontrar seu novo melhor amigo?
+        </h2>
+        <p className="text-muted-foreground mb-6 max-w-lg mx-auto">
+          Fale com a gente pelo WhatsApp e tire todas as suas dúvidas. Estamos
+          prontos para ajudar você a escolher o filhote ideal.
+        </p>
+        <a
+          href="https://wa.me/5551999965953?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20os%20filhotes%20dispon%C3%ADveis."
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 bg-brand-brown hover:bg-brand-brown-light text-white px-8 py-4 rounded-full text-base font-bold transition-[background-color,transform] duration-200 hover:scale-105 cursor-pointer"
+        >
+          <Phone className="w-5 h-5" aria-hidden="true" />
+          Falar com o Otto Canil
+        </a>
       </section>
     </div>
   );

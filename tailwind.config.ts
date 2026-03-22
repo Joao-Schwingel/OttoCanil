@@ -11,7 +11,8 @@ const config: Config = {
     extend: {
       fontFamily: {
         dancing: ['Dancing Script', 'cursive'],
-        montserrat: ['Montserrat', 'sans-serif']
+        montserrat: ['Montserrat', 'sans-serif'],
+        playfair: ['Playfair Display', 'serif']
       },
       colors: {
         background: 'hsl(var(--background))',
@@ -47,6 +48,14 @@ const config: Config = {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
+        brand: {
+          brown: '#4A290D',
+          'brown-light': '#6B3D1E',
+          gold: '#C8963E',
+          'gold-light': '#E8C87A',
+          cream: '#FBF8F4',
+          'cream-dark': '#F0EBE3'
+        },
         chart: {
           '1': 'hsl(var(--chart-1))',
           '2': 'hsl(var(--chart-2))',

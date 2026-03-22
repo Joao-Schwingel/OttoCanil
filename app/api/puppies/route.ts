@@ -1,18 +1,34 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import cloudinary from '@/utils/cloudinary';
 
-export async function GET() {
-  try {
-    const result = await cloudinary.search
-      .expression('resource_type:image')
-      .fields('url')
-      .fields('tags')
-      .fields('public_id')
-      .fields('status')
-      .sort_by('created_at', 'desc')
-      .execute();
+async function fetchFromCloudinary(breed: string | null) {
+  let expression = 'resource_type:image';
+  if (breed) {
+    expression = `resource_type:image AND tags=${breed}`;
+  }
 
-    return NextResponse.json(result);
+  return cloudinary.search
+    .expression(expression)
+    .fields('url')
+    .fields('tags')
+    .fields('public_id')
+    .fields('status')
+    .sort_by('created_at', 'desc')
+    .execute();
+}
+
+export async function GET(request: NextRequest) {
+  try {
+    const breed = request.nextUrl.searchParams.get('breed');
+    const result = await fetchFromCloudinary(breed);
+
+    return NextResponse.json(result, {
+      headers: {
+        'Cache-Control':
+          'public, s-maxage=120, stale-while-revalidate=600, stale-if-error=86400',
+        Vary: 'Accept-Encoding'
+      }
+    });
   } catch (error) {
     console.error('Error fetching puppies from Cloudinary:', error);
     return NextResponse.json(
@@ -26,7 +42,6 @@ export async function POST(request: Request) {
   try {
     const { breed, imageUrl, publicId, isAvailable } = await request.json();
 
-    // Validate input
     if (!breed || !imageUrl || !publicId) {
       return NextResponse.json(
         { error: 'Missing required fields' },
@@ -34,7 +49,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Update the image metadata in Cloudinary
     const updateResult = await cloudinary.uploader.explicit(publicId, {
       type: 'upload',
       context: `breed=${breed}&isAvailable=${isAvailable}`
@@ -50,12 +64,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       message: 'Puppy added successfully',
-      puppy: {
-        breed,
-        imageUrl,
-        isAvailable,
-        publicId
-      }
+      puppy: { breed, imageUrl, isAvailable, publicId }
     });
   } catch (error) {
     console.error('Error adding puppy:', error);
