@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Phone } from 'lucide-react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import { BREEDS } from '@/lib/breeds';
 
 const MobileNav = dynamic(
   () => import('@/components/mobile-nav').then((mod) => mod.MobileNav),
@@ -13,15 +14,10 @@ const MobileNav = dynamic(
   }
 );
 
-const navLinks = [
-  { href: '/breeds/shih-tzu', label: 'Shih Tzu' },
-  { href: '/breeds/golden-retriver', label: 'Golden Retriever' },
-  { href: '/breeds/bulldog-frances', label: 'Bulldog Francês' },
-  { href: '/breeds/samoieda', label: 'Samoieda' },
-  { href: '/breeds/chihuahua', label: 'Chihuahua' },
-  { href: '/breeds/husky-siberiano', label: 'Husky Siberiano' },
-  { href: '/breeds/spitz-alemao', label: 'Spitz Alemão' }
-];
+const navLinks = BREEDS.map((b) => ({
+  href: `/breeds/${b.slug}`,
+  label: b.label
+}));
 
 export function Header() {
   return (
@@ -37,6 +33,7 @@ export function Header() {
               alt="Otto Canil logo"
               width={44}
               height={44}
+              style={{ width: 'auto', height: 'auto' }}
             />
             <span className="hidden sm:inline">Otto Hundeh&uuml;tte</span>
           </Link>

@@ -257,14 +257,16 @@ export function PuppyCarousel({ breed }: PuppyCarouselProps) {
               {/* Gender badge */}
               <div
                 className={`flex absolute left-2.5 top-2.5 items-center px-3 py-1.5 rounded-full backdrop-blur-md z-10 shadow-sm ${
-                  puppies[currentIndex].tags[1] === 'M'
+                  puppies[currentIndex].tags?.includes('M')
                     ? 'bg-blue-500/80 text-white'
                     : 'bg-pink-500/80 text-white'
                 } ${badgeClass}`}
               >
                 <Dog className="w-3.5 h-3.5" aria-hidden="true" />
                 <span className="ml-1.5 text-xs font-semibold">
-                  {puppies[currentIndex].tags[1] === 'M' ? 'Macho' : 'Fêmea'}
+                  {puppies[currentIndex].tags?.includes('M')
+                    ? 'Macho'
+                    : 'Fêmea'}
                 </span>
               </div>
 

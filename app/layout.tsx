@@ -2,9 +2,7 @@ import type React from 'react';
 import type { Metadata } from 'next';
 import { Montserrat, Playfair_Display } from 'next/font/google';
 import './globals.css';
-import { Header } from '@/components/header';
-import { Footer } from '@/components/footer';
-import { WhatsAppButton } from '@/components/whatsapp-button';
+import { SiteChrome } from '@/components/site-chrome';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -109,10 +107,7 @@ export default function RootLayout({
         >
           Pular para o conteúdo principal
         </a>
-        <Header />
-        <main id="main-content">{children}</main>
-        <Footer />
-        <WhatsAppButton />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

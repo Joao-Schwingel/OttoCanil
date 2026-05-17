@@ -5,16 +5,12 @@ import { useState } from 'react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Menu, Phone } from 'lucide-react';
+import { BREEDS } from '@/lib/breeds';
 
-const navLinks = [
-  { href: '/breeds/shih-tzu', label: 'Shih Tzu' },
-  { href: '/breeds/golden-retriver', label: 'Golden Retriever' },
-  { href: '/breeds/bulldog-frances', label: 'Bulldog Francês' },
-  { href: '/breeds/samoieda', label: 'Samoieda' },
-  { href: '/breeds/chihuahua', label: 'Chihuahua' },
-  { href: '/breeds/husky-siberiano', label: 'Husky Siberiano' },
-  { href: '/breeds/spitz-alemao', label: 'Spitz Alemão' }
-];
+const navLinks = BREEDS.map((b) => ({
+  href: `/breeds/${b.slug}`,
+  label: b.label
+}));
 
 export function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);

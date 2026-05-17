@@ -1,5 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server';
+import { getServerSession } from 'next-auth';
 import cloudinary from '@/utils/cloudinary';
+import { authOptions } from '@/utils/authoption';
 
 async function fetchFromCloudinary(breed: string | null) {
   let expression = 'resource_type:image';
@@ -20,12 +22,14 @@ async function fetchFromCloudinary(breed: string | null) {
 export async function GET(request: NextRequest) {
   try {
     const breed = request.nextUrl.searchParams.get('breed');
+    const fresh = request.nextUrl.searchParams.get('fresh') === '1';
     const result = await fetchFromCloudinary(breed);
 
     return NextResponse.json(result, {
       headers: {
-        'Cache-Control':
-          'public, s-maxage=120, stale-while-revalidate=600, stale-if-error=86400',
+        'Cache-Control': fresh
+          ? 'no-store'
+          : 'public, s-maxage=120, stale-while-revalidate=600, stale-if-error=86400',
         Vary: 'Accept-Encoding'
       }
     });
@@ -35,39 +39,5 @@ export async function GET(request: NextRequest) {
       { error: 'Failed to fetch images' },
       { status: 500 }
     );
-  }
-}
-
-export async function POST(request: Request) {
-  try {
-    const { breed, imageUrl, publicId, isAvailable } = await request.json();
-
-    if (!breed || !imageUrl || !publicId) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      );
-    }
-
-    const updateResult = await cloudinary.uploader.explicit(publicId, {
-      type: 'upload',
-      context: `breed=${breed}&isAvailable=${isAvailable}`
-    });
-
-    if (!updateResult || updateResult.error) {
-      console.error('Error updating Cloudinary metadata:', updateResult.error);
-      return NextResponse.json(
-        { error: 'Failed to update image metadata' },
-        { status: 500 }
-      );
-    }
-
-    return NextResponse.json({
-      message: 'Puppy added successfully',
-      puppy: { breed, imageUrl, isAvailable, publicId }
-    });
-  } catch (error) {
-    console.error('Error adding puppy:', error);
-    return NextResponse.json({ error: 'Failed to add puppy' }, { status: 500 });
   }
 }
