@@ -6,10 +6,7 @@ export interface Breed {
 export const BREEDS: Breed[] = [
   { slug: 'shih-tzu', label: 'Shih Tzu' },
   { slug: 'golden-retriver', label: 'Golden Retriever' },
-  { slug: 'bulldog-frances', label: 'Bulldog Francês' },
-  { slug: 'samoieda', label: 'Samoieda' },
   { slug: 'chihuahua', label: 'Chihuahua' },
-  { slug: 'husky-siberiano', label: 'Husky Siberiano' },
   { slug: 'spitz-alemao', label: 'Spitz Alemão' }
 ];
 

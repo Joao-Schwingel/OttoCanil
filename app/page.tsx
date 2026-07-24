@@ -9,7 +9,7 @@ export const metadata = {
   title:
     'Otto Canil - Filhotes de Raça Pura em Porto Alegre | Compre com Segurança',
   description:
-    'Filhotes saudáveis e de raça pura em Porto Alegre. Shih Tzu, Golden Retriever, Bulldog Francês, Samoieda, Chihuahua, Husky Siberiano e Spitz Alemão. Vacinados, vermifugados e criados com amor desde 2019. Entrega em toda região metropolitana.',
+    'Filhotes saudáveis e de raça pura em Porto Alegre. Shih Tzu, Golden Retriever, Chihuahua e Spitz Alemão. Vacinados, vermifugados e criados com amor desde 2019. Entrega em toda região metropolitana.',
   alternates: {
     canonical: 'https://www.ottocanil.com'
   }
@@ -29,28 +29,10 @@ const breeds = [
     tag: 'Amigo da família'
   },
   {
-    name: 'Bulldog Francês',
-    slug: 'bulldog-frances',
-    image: 'bulldogfrances',
-    tag: 'Perfeito p/ apto'
-  },
-  {
-    name: 'Samoieda',
-    slug: 'samoieda',
-    image: 'samoieda',
-    tag: 'Sorriso encantador'
-  },
-  {
     name: 'Chihuahua',
     slug: 'chihuahua',
     image: 'chihuahua',
     tag: 'Pequeno e valente'
-  },
-  {
-    name: 'Husky Siberiano',
-    slug: 'husky-siberiano',
-    image: 'huskysiberiano',
-    tag: 'Aventureiro nato'
   },
   {
     name: 'Spitz Alemão',
@@ -401,12 +383,12 @@ export default function Home() {
 
           {/* Featured Image + Story */}
           <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center mb-12 md:mb-16">
-            {/* Featured Image - Marcos with Samoiedas */}
+            {/* Featured Image - Marcos with his dogs */}
             <div className="lg:col-span-3 relative">
               <div className="relative rounded-2xl overflow-hidden shadow-xl">
                 <Image
                   src="/images/nossa_historia3.jpg"
-                  alt="Marcos, fundador do Otto Canil, com filhotes de Samoieda"
+                  alt="Marcos, fundador do Otto Canil, com seus filhotes"
                   width={800}
                   height={600}
                   loading="lazy"
@@ -415,7 +397,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-brown/60 via-transparent to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-5 md:p-8">
                   <p className="text-white/90 text-sm md:text-base font-medium">
-                    Marcos, fundador do Otto Canil, com seus Samoiedas
+                    Marcos, fundador do Otto Canil, com seus cães
                   </p>
                   <p className="text-white/60 text-xs md:text-sm mt-1">
                     O sonho que deu início a tudo
@@ -473,7 +455,7 @@ export default function Home() {
             <div className="col-span-6 md:col-span-7 relative rounded-2xl overflow-hidden shadow-lg group">
               <Image
                 src="/images/nossa_historia4.jpg"
-                alt="Família cuidando dos filhotes de Samoieda no canil"
+                alt="Família cuidando dos filhotes no canil"
                 width={700}
                 height={400}
                 loading="lazy"

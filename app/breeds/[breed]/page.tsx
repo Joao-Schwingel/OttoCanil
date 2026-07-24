@@ -9,10 +9,7 @@ export function generateStaticParams() {
   return [
     { breed: 'shih-tzu' },
     { breed: 'golden-retriver' },
-    { breed: 'bulldog-frances' },
-    { breed: 'samoieda' },
     { breed: 'chihuahua' },
-    { breed: 'husky-siberiano' },
     { breed: 'spitz-alemao' }
   ];
 }
@@ -129,33 +126,6 @@ Uma de suas qualidades mais marcantes é seu temperamento extremamente amigável
       { label: 'Peso', value: '25-40kg' }
     ]
   },
-  'bulldog-frances': {
-    name: 'Bulldog Francês',
-    description: `O Buldogue Francês é um cão de pequeno porte, mas com uma presença marcante e cativante. Reconhecido por suas orelhas eretas e pelo rosto achatado e expressivo, essa raça é encantadora. Possuem um corpo musculoso e bem proporcionado.
-
-Uma das características mais adoráveis do Buldogue Francês é seu temperamento. São cães sociáveis e companheiros, conhecidos por sua lealdade. São brincalhões, mas equilibrados, o que os torna excelentes para famílias, inclusive aquelas com crianças. Essa raça é uma escolha maravilhosa para quem busca um cão carinhoso que se adapta bem a ambientes pequenos.`,
-    image: '/images/buldogue.jpg',
-    characteristics: [
-      { label: 'Carinho', rating: 5 },
-      { label: 'Convívio com outros cães', rating: 5 },
-      { label: 'Atividade com crianças', rating: 5 },
-      { label: 'Proteção', rating: 2 },
-      { label: 'Tolerância ao calor', rating: 1 },
-      { label: 'Tolerância ao frio', rating: 4 },
-      { label: 'Necessidade de exercício', rating: 4 },
-      { label: 'Apego ao dono', rating: 5 },
-      { label: 'Facilidade de treinamento', rating: 5 },
-      { label: 'Cuidados com a higiene', rating: 3 }
-    ],
-    specs: [
-      { label: 'Expectativa de vida', value: '10 a 12 anos' },
-      { label: 'Tamanho adulto', value: 'Médio' },
-      { label: 'Cor', value: 'Fulvo, tigrado, branco, creme e preto' },
-      { label: 'Pelo', value: 'Curto, liso e denso' },
-      { label: 'Altura', value: '30-35cm' },
-      { label: 'Peso', value: '8-14kg' }
-    ]
-  },
   'spitz-alemao': {
     name: 'Spitz Alemão',
     description: `O Lulu da Pomerânia, também conhecido como Spitz Alemão Anão, é uma das raças de cães mais encantadoras e populares, reconhecidos por seu tamanho pequeno e aparência fofa. Pesando entre 1,8 e 3,5 kg, com altura entre 18 e 22 cm.
@@ -208,63 +178,6 @@ Apesar do pequeno tamanho, o Chihuahua tem uma personalidade marcante. São extr
       { label: 'Pelo', value: 'Curto ou longo' },
       { label: 'Altura', value: '15-23cm' },
       { label: 'Peso', value: '1,5-3kg' }
-    ]
-  },
-  samoieda: {
-    name: 'Samoieda',
-    description: `O Samoieda é uma raça encantadora. Esse cão de porte grande apresenta um corpo robusto, com altura entre 50 e 60 cm e peso variando de 20 a 40 kg. Sua pelagem é densa, dupla, incrivelmente macia e branca como a neve. Seus olhos escuros e vivos, combinados com uma boca curvada para cima, dão a eles a expressão característica de "cão sorridente".
-
-A personalidade do Samoieda é tão notável quanto sua aparência. É um cão extrovertido, gentil e sociável, que adora estar em companhia de pessoas. Ideal para famílias que buscam um companheiro sociável e energético, é uma escolha que traz alegria e beleza a qualquer lar.`,
-    image: '/images/samoieda.jpg',
-    characteristics: [
-      { label: 'Carinho', rating: 5 },
-      { label: 'Convívio com outros cães', rating: 5 },
-      { label: 'Atividade com crianças', rating: 5 },
-      { label: 'Proteção', rating: 4 },
-      { label: 'Tolerância ao calor', rating: 1 },
-      { label: 'Tolerância ao frio', rating: 5 },
-      { label: 'Necessidade de exercício', rating: 5 },
-      { label: 'Apego ao dono', rating: 5 },
-      { label: 'Facilidade de treinamento', rating: 3 },
-      { label: 'Cuidados com a higiene', rating: 3 }
-    ],
-    specs: [
-      { label: 'Expectativa de vida', value: '12 a 16 anos' },
-      { label: 'Tamanho adulto', value: 'Grande' },
-      { label: 'Cor', value: 'Branco' },
-      { label: 'Pelo', value: 'Longo' },
-      { label: 'Altura', value: '53-60cm' },
-      { label: 'Peso', value: '23-35kg' }
-    ]
-  },
-  'husky-siberiano': {
-    name: 'Husky Siberiano',
-    description: `Com sua aparência marcante e temperamento energético, o Husky é hoje uma escolha popular como animal de companhia. É um cão de porte grande, com altura variando entre 50 e 60 cm e peso entre 16 e 37 kg. Seus olhos podem ser azuis, verdes, castanhos ou apresentar heterocromia, o que contribui para sua aparência fascinante.
-
-Em termos de personalidade, o Husky Siberiano é um cão energético, independente e amigável. Apesar de sua aparência autoritária, é uma raça bastante carinhosa e sociável. Seu entusiasmo e energia o tornam um excelente companheiro para famílias ativas que apreciam aventuras ao ar livre.`,
-    image: '/images/husky.jpg',
-    characteristics: [
-      { label: 'Carinho', rating: 5 },
-      { label: 'Convívio com outros cães', rating: 4 },
-      { label: 'Atividade com crianças', rating: 3 },
-      { label: 'Proteção', rating: 4 },
-      { label: 'Tolerância ao calor', rating: 2 },
-      { label: 'Tolerância ao frio', rating: 5 },
-      { label: 'Necessidade de exercício', rating: 5 },
-      { label: 'Apego ao dono', rating: 5 },
-      { label: 'Facilidade de treinamento', rating: 5 },
-      { label: 'Cuidados com a higiene', rating: 3 }
-    ],
-    specs: [
-      { label: 'Expectativa de vida', value: '12 a 15 anos' },
-      { label: 'Tamanho adulto', value: 'Grande' },
-      {
-        label: 'Cor',
-        value: 'Cinza e branco, preto e branco, marrom e branco'
-      },
-      { label: 'Pelo', value: 'Longo' },
-      { label: 'Altura', value: '53-60cm' },
-      { label: 'Peso', value: '20-30kg' }
     ]
   }
 };

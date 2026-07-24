@@ -23,17 +23,14 @@ export const metadata: Metadata = {
     template: '%s | Otto Canil'
   },
   description:
-    'Canil em Porto Alegre especializado em filhotes de raça pura. Shih Tzu, Golden Retriever, Bulldog Francês, Samoieda, Chihuahua, Husky Siberiano e Spitz Alemão. Criação responsável desde 2019.',
+    'Canil em Porto Alegre especializado em filhotes de raça pura. Shih Tzu, Golden Retriever, Chihuahua e Spitz Alemão. Criação responsável desde 2019.',
   keywords: [
     'filhotes porto alegre',
     'canil porto alegre',
     'comprar filhote',
     'shih tzu filhote',
     'golden retriever filhote',
-    'bulldog frances filhote',
-    'samoieda filhote',
     'chihuahua filhote',
-    'husky siberiano filhote',
     'spitz alemao filhote',
     'cães de raça pura',
     'canil rio grande do sul',
