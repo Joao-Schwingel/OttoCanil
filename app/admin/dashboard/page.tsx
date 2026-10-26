@@ -5,7 +5,8 @@ import {
   useEffect,
   useTransition,
   useCallback,
-  useMemo
+  useMemo,
+  useRef
 } from 'react';
 import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react';
@@ -31,7 +32,7 @@ interface Puppy {
 }
 
 export default function AdminDashboard() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const [selectedBreed, setSelectedBreed] = useState('');
   const [puppies, setPuppies] = useState<Puppy[]>([]);
@@ -40,9 +41,21 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [sexo, setSexo] = useState<string>('M');
   const [pendingIds, setPendingIds] = useState<Set<string>>(new Set());
+  const [deletingIds, setDeletingIds] = useState<Set<string>>(new Set());
   const [, startTransition] = useTransition();
   const [filterBreed, setFilterBreed] = useState<string>('all');
   const [confirmingId, setConfirmingId] = useState<string | null>(null);
+
+  // O CldUploadWidget cria o widget uma única vez e congela as props daquele
+  // render, então o onSuccess nao ve o estado atual: lemos raca e sexo de refs.
+  const selectedBreedRef = useRef(selectedBreed);
+  const sexoRef = useRef(sexo);
+  selectedBreedRef.current = selectedBreed;
+  sexoRef.current = sexo;
+
+  // Fotos recem-enviadas: a busca do Cloudinary leva alguns segundos para
+  // indexar o upload e as novas tags, entao mantemos a versao local ate la.
+  const recentUploads = useRef<Map<string, Puppy>>(new Map());
 
   const fetchPuppies = useCallback(async () => {
     try {
@@ -55,7 +68,26 @@ export default function AdminDashboard() {
         return;
       }
       const data = await response.json();
-      setPuppies(data.resources ?? []);
+      const resources: Puppy[] = data.resources ?? [];
+      const recent = recentUploads.current;
+
+      const merged = resources.map((resource) => {
+        const local = recent.get(resource.public_id);
+        if (!local) return resource;
+        // Indice ainda sem a raca: mostramos as tags que acabamos de gravar.
+        if (!getBreed(resource.tags)) {
+          return { ...resource, tags: local.tags };
+        }
+        recent.delete(resource.public_id);
+        return resource;
+      });
+
+      const indexed = new Set(resources.map((r) => r.public_id));
+      const notIndexedYet = Array.from(recent.values()).filter(
+        (p) => !indexed.has(p.public_id)
+      );
+
+      setPuppies([...notIndexedYet, ...merged]);
       setError(null);
     } catch (err) {
       setError(`Error fetching puppies: ${(err as Error).message}`);
@@ -72,13 +104,33 @@ export default function AdminDashboard() {
     }
   }, [status, router, fetchPuppies]);
 
+  const applyTags = useCallback(
+    async (publicId: string, breed: string, sexoTag?: string) => {
+      const encoded = publicId.split('/').map(encodeURIComponent).join('/');
+      const response = await fetch(`/api/puppies/${encoded}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ breed, sexo: sexoTag }),
+        cache: 'no-store'
+      });
+      if (!response.ok) {
+        const errorResponse = await response.json().catch(() => ({}));
+        throw new Error(errorResponse.error ?? 'Failed to update tags');
+      }
+      return (await response.json()) as { public_id: string; tags: string[] };
+    },
+    []
+  );
+
   const handleDelete = (puppy: Puppy) => {
     if (pendingIds.has(puppy.public_id)) return;
 
     const previous = puppies;
     setPuppies((curr) => curr.filter((p) => p.public_id !== puppy.public_id));
     setPendingIds((s) => new Set(s).add(puppy.public_id));
+    setDeletingIds((s) => new Set(s).add(puppy.public_id));
     setConfirmingId(null);
+    recentUploads.current.delete(puppy.public_id);
 
     startTransition(async () => {
       try {
@@ -107,26 +159,90 @@ export default function AdminDashboard() {
           next.delete(puppy.public_id);
           return next;
         });
+        setDeletingIds((s) => {
+          const next = new Set(s);
+          next.delete(puppy.public_id);
+          return next;
+        });
       }
     });
   };
 
   const handleUploadSuccess = (result: any) => {
-    const info = result?.info;
-    if (info?.public_id && info?.secure_url) {
-      setPuppies((curr) => [
-        {
-          public_id: info.public_id,
-          url: info.secure_url,
-          secure_url: info.secure_url,
-          tags: info.tags ?? [selectedBreed, sexo]
-        },
-        ...curr
-      ]);
-      setInfo('Foto enviada com sucesso.');
-      setTimeout(() => setInfo(null), 3000);
-    }
-    fetchPuppies();
+    const uploaded = result?.info;
+    if (!uploaded?.public_id || !uploaded?.secure_url) return;
+
+    const breed = selectedBreedRef.current;
+    const sexoTag = sexoRef.current;
+    const publicId = uploaded.public_id as string;
+
+    const puppy: Puppy = {
+      public_id: publicId,
+      url: uploaded.secure_url,
+      secure_url: uploaded.secure_url,
+      tags: [breed, sexoTag]
+    };
+
+    recentUploads.current.set(publicId, puppy);
+    setPuppies((curr) => [
+      puppy,
+      ...curr.filter((p) => p.public_id !== publicId)
+    ]);
+
+    startTransition(async () => {
+      try {
+        const updated = await applyTags(publicId, breed, sexoTag);
+        recentUploads.current.set(publicId, { ...puppy, tags: updated.tags });
+        setInfo('Foto enviada com sucesso.');
+        setTimeout(() => setInfo(null), 3000);
+      } catch (err) {
+        recentUploads.current.delete(publicId);
+        console.error('Error applying tags:', err);
+        setError(
+          'A foto foi enviada, mas a raça não foi salva. Use "Definir raça" no cartão da foto.'
+        );
+      }
+      fetchPuppies();
+    });
+  };
+
+  const handleSetBreed = (puppy: Puppy, breedSlug: string) => {
+    if (pendingIds.has(puppy.public_id)) return;
+
+    setPendingIds((s) => new Set(s).add(puppy.public_id));
+
+    startTransition(async () => {
+      try {
+        const updated = await applyTags(
+          puppy.public_id,
+          breedSlug,
+          getSexo(puppy.tags)
+        );
+        setPuppies((curr) =>
+          curr.map((p) =>
+            p.public_id === puppy.public_id ? { ...p, tags: updated.tags } : p
+          )
+        );
+        const recent = recentUploads.current.get(puppy.public_id);
+        if (recent) {
+          recentUploads.current.set(puppy.public_id, {
+            ...recent,
+            tags: updated.tags
+          });
+        }
+        setInfo('Raça atualizada.');
+        setTimeout(() => setInfo(null), 3000);
+      } catch (err) {
+        console.error('Error setting breed:', err);
+        setError('Não foi possível atualizar a raça.');
+      } finally {
+        setPendingIds((s) => {
+          const next = new Set(s);
+          next.delete(puppy.public_id);
+          return next;
+        });
+      }
+    });
   };
 
   const filteredPuppies = useMemo(() => {
@@ -189,9 +305,10 @@ export default function AdminDashboard() {
               <Label htmlFor="r2">Macho</Label>
             </div>
           </RadioGroup>
+          {/* As tags nao vao nas options do widget: ele guarda as options do
+              primeiro render. Raca e sexo sao gravados no onSuccess, via PATCH. */}
           <CldUploadWidget
             uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
-            options={{ tags: [selectedBreed, sexo] }}
             onSuccess={handleUploadSuccess}
           >
             {({ open }) => (
@@ -243,7 +360,8 @@ export default function AdminDashboard() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredPuppies.map((puppy) => {
-            const deleting = pendingIds.has(puppy.public_id);
+            const pending = pendingIds.has(puppy.public_id);
+            const deleting = deletingIds.has(puppy.public_id);
             const breed = getBreed(puppy.tags);
             const sexoTag = getSexo(puppy.tags);
             const confirming = confirmingId === puppy.public_id;
@@ -251,7 +369,7 @@ export default function AdminDashboard() {
               <div
                 key={puppy.public_id}
                 className={`border p-4 rounded transition-opacity ${
-                  deleting ? 'opacity-50' : ''
+                  pending ? 'opacity-50' : ''
                 }`}
               >
                 <div className="relative w-full h-48 mb-2">
@@ -264,12 +382,31 @@ export default function AdminDashboard() {
                   />
                 </div>
                 <p>
-                  <strong>Raça:</strong> {breedLabel(breed)}
+                  <strong>Raça:</strong> {breedLabel(breed) || '—'}
                 </p>
                 <p>
                   <strong>Sexo:</strong>{' '}
                   {sexoTag === 'F' ? 'Fêmea' : sexoTag === 'M' ? 'Macho' : '—'}
                 </p>
+                {!breed && (
+                  <div className="mt-2">
+                    <Select
+                      disabled={pending}
+                      onValueChange={(value) => handleSetBreed(puppy, value)}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Definir raça" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {BREEDS.map((b) => (
+                          <SelectItem key={b.slug} value={b.slug}>
+                            {b.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
                 <div className="mt-2 flex gap-2">
                   {confirming ? (
                     <>
@@ -290,11 +427,11 @@ export default function AdminDashboard() {
                     <button
                       onClick={() => setConfirmingId(puppy.public_id)}
                       className={`${
-                        deleting
+                        pending
                           ? 'bg-gray-400 cursor-not-allowed'
                           : 'bg-red-500 hover:bg-red-600'
                       } text-white px-2 py-1 rounded`}
-                      disabled={deleting}
+                      disabled={pending}
                     >
                       {deleting ? 'Deletando...' : 'Deletar'}
                     </button>
